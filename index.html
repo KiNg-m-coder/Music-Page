@@ -12,6 +12,37 @@
       href="75617c13-0ef4-470a-987c-6e0224702f80.webp"
     />
   </head>
+  <script>
+    // Wait for the page to load
+    document.addEventListener("DOMContentLoaded", function () {
+      const input = document.getElementById("messageInput"); // Text input
+      const sendButton = document.getElementById("sendButton"); // Send button
+      const chatbox = document.getElementById("chatbox"); // Chat messages container
+
+      // Load old messages from localStorage
+      chatbox.innerHTML = localStorage.getItem("messages") || "";
+
+      // Function to send message
+      sendButton.addEventListener("click", function () {
+        const message = input.value.trim(); // Get input value
+        if (message === "") return; // Don't send empty messages
+
+        // Create a new message element
+        const messageElement = document.createElement("p");
+        messageElement.textContent = message;
+        messageElement.style.color = "white"; // White text for visibility
+
+        // Add message to chatbox
+        chatbox.appendChild(messageElement);
+
+        // Save messages in localStorage
+        localStorage.setItem("messages", chatbox.innerHTML);
+
+        // Clear input field
+        input.value = "";
+      });
+    });
+  </script>
   <body>
     <div>
       <iframe
@@ -23,6 +54,9 @@
         allowfullscreen
       >
       </iframe>
+      <div id="chatbox"></div>
+      <input type="text" id="messageInput" />
+      <button id="sendButton">Send</button>
     </div>
   </body>
 </html>
